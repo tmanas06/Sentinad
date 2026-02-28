@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/* ============================================
+   THE SENTINAD — Retro Terminal Theme
+   Purple CRT aesthetic with scanline effects
+   ============================================ */
+
+@theme {
+  --color-sentinad-purple: #8B5CF6;
+  --color-sentinad-purple-dark: #6D28D9;
+  --color-sentinad-purple-deep: #4C1D95;
+  --color-sentinad-purple-light: #A78BFA;
+  --color-sentinad-purple-glow: #C4B5FD;
+  --color-sentinad-bg: #0a0a0f;
+  --color-sentinad-bg-card: #111118;
+  --color-sentinad-bg-terminal: #0d0d14;
+  --color-sentinad-border: #1e1e2e;
+  --color-sentinad-text: #e4e4ef;
+  --color-sentinad-text-dim: #6b6b8a;
+  --color-sentinad-cyan: #22d3ee;
+  --color-sentinad-green: #34d399;
+  --color-sentinad-red: #f87171;
+  --color-sentinad-yellow: #fbbf24;
+  --color-sentinad-orange: #fb923c;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', monospace;
+}
+
+/* === BASE === */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--color-sentinad-bg);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  background: var(--color-sentinad-bg);
+  color: var(--color-sentinad-text);
+  overflow: hidden;
+  height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* === CRT SCANLINE OVERLAY === */
+.crt-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.08) 0px,
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.crt-flicker {
+  animation: crt-flicker 0.15s infinite alternate;
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.97; }
+  100% { opacity: 1; }
+}
+
+/* === GLOW EFFECTS === */
+.glow-purple {
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.6),
+               0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.glow-green {
+  text-shadow: 0 0 8px rgba(52, 211, 153, 0.6),
+               0 0 20px rgba(52, 211, 153, 0.3);
+}
+
+.glow-red {
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.6),
+               0 0 20px rgba(248, 113, 113, 0.3);
+}
+
+.glow-cyan {
+  text-shadow: 0 0 8px rgba(34, 211, 238, 0.6),
+               0 0 20px rgba(34, 211, 238, 0.3);
+}
+
+.glow-yellow {
+  text-shadow: 0 0 8px rgba(251, 191, 36, 0.6),
+               0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.box-glow-purple {
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.15),
+              inset 0 0 15px rgba(139, 92, 246, 0.05);
+}
+
+/* === TERMINAL SCROLLBAR === */
+.terminal-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.terminal-scroll::-webkit-scrollbar-track {
+  background: var(--color-sentinad-bg-terminal);
+}
+.terminal-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-sentinad-purple-dark);
+  border-radius: 3px;
+}
+.terminal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sentinad-purple);
+}
+
+/* === TYPEWRITER === */
+@keyframes typewriter-cursor {
+  0%, 50% { border-right-color: var(--color-sentinad-purple); }
+  51%, 100% { border-right-color: transparent; }
+}
+
+.typewriter-cursor {
+  border-right: 2px solid var(--color-sentinad-purple);
+  animation: typewriter-cursor 1s step-end infinite;
+}
+
+/* === PULSE ANIMATION === */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* === STAT COUNTER ANIMATION === */
+@keyframes count-up {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.stat-update {
+  animation: count-up 0.3s ease-out;
+}
+
+/* === ROAST ENTRY === */
+@keyframes slide-in {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.roast-entry {
+  animation: slide-in 0.4s ease-out;
+}
+
+/* === STATUS INDICATOR === */
+@keyframes status-blink {
+  0%, 100% { background-color: var(--color-sentinad-green); }
+  50% { background-color: transparent; }
+}
+
+.status-online {
+  animation: status-blink 1.5s ease-in-out infinite;
+}
+
+/* === GRADIENT BORDER === */
+.gradient-border {
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-sentinad-purple), var(--color-sentinad-purple-dark), transparent);
+  z-index: -1;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+}
